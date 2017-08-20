@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>login</title>
+<script>
+function judge()
+{
+	var names=document.getElementById("loginname").value;
+	var verify=document.getElementById("verify").value;
+	if(names==""||names==null)
+		{
+		document.getElementById("tip").innerHTML="昵称不能为空";
+		return false;
+		}
+	if(verify==""||verify==null)
+		{
+		document.getElementById("tip2").innerHTML="验证码不能为空";
+		return false;
+		}
+	return true;
+} 
+ function  imgclick() {
+	document.getElementById("img1").src="verifyimg?"+Math.random();
+	
+} 
+ function  initajax() {
+	 var xmlhttp;
+	 if(window.XMLHttpRequest)
+		{
+		 	xmlhttp=new XMLHttpRequest();
+		 	
+		}
+	 else
+		 {
+		 	xmlhttp=new ActiveObject("Microsoft.XMLHTTP")
+		 }
+	 return xmlhttp;
+}
+ function checkname()
+ {
+		var http_request=initajax();
+		var name=document.getElementById("loginname").value;
+		http_request.open("get","namecheck?loginname="+name,true)
+		
+		http_request.onreadystatechange=function()
+		{
+			
+			if(http_request.readyState==4)
+				{
+					if(http_request.status==200)
+						{
+/* 						alert(http_request.responseText);
+ */							if(http_request.responseText=="true")
+								{
+								document.getElementById("tip").innerHTML="昵称可用";
+
+								}
+							else
+								{
+								document.getElementById("tip").innerHTML="昵称重复";
+								}
+							
+							
+						}
+				}
+		}
+		
+	http_request.send(null);
+ }
+
+ 
+</script>
+<style type="text/css">
+body{
+ 
+ 	background-image:url('imgs/background2.gif');
+ 	background-size:cover;
+ 	background-repeat:no-repeat;
+ 	color:white;
+ }
+ h1{
+
+ text-align:center;
+
+ }
+ 
+ table{
+ top:0px;
+ left:0px;
+ right:0px;
+ bottom:0px;
+ margin:auto;
+ text-align:center;
+ 
+ }
+</style>
+</head>
+<body >
+<br/>
+<br/>
+<br/>
+<br/>
+<h1 >欢迎来到特别不好用的聊天室</h1>
+<form action="usenamelogin" onsubmit="return judge()">
+<br/>
+<table>
+<tr>
+<td>请输入您精心瞎选的假名:</td>
+<td><input type="text" id="loginname" name="loginname" onblur="checkname()"/></td>
+<td><div id="tip" style="color:red"> </div></td>
+</tr>
+<tr>
+<td>请输入看不出来的验证码:</td>
+<td><input type="text" name="verify" id="verify"/></td>
+<td><div id="tip2" style="color:red"> </div></td>
+</tr>
+<tr>
+<td><input type="submit" onclick="return judge()" value="打开bug世界" id="submitlgname" name="submitlgname"/></td>
+<td><img id="img1" name="img1" onclick="imgclick()" src="verifyimg"></td>
+</tr>
+</table>
+
+</form>
+</body>
+</html>
